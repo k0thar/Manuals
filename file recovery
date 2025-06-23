@@ -1,0 +1,55 @@
+# Recovering Deleted Home Folders in Void Linux
+
+## Immediate Actions
+
+1. **Stop using the system immediately** - Continued use reduces chances of recovery as deleted files may be overwritten.
+
+2. **Boot from a live USB** - Don't boot into your normal system to prevent overwriting deleted files.
+
+## Data Recovery Options
+
+### Using TestDisk/PhotoRec
+1. Boot from a live USB
+2. Install recovery tools:
+   ```
+   xbps-install -S testdisk
+   ```
+3. Run TestDisk to attempt partition/file recovery:
+   ```
+   sudo testdisk
+   ```
+
+### Using extundelete (if you used ext4)
+```
+xbps-install -S extundelete
+sudo extundelete /dev/sdXY --restore-directory /home/<username>
+```
+
+## Restoring User Account
+
+If your user account seems missing:
+
+1. Check if the user still exists:
+   ```
+   grep yourusername /etc/passwd
+   ```
+
+2. If missing, recreate it:
+   ```
+   sudo useradd -m -G wheel,audio,video,storage yourusername
+   sudo passwd yourusername
+   ```
+## There may be a need for reboot for system to actualy add user into new group
+## Preventing Future Issues
+
+1. Set up regular backups (rsync, borg, etc.)
+2. Consider using snapshots with Btrfs or ZFS
+3. Be extra careful with `rm -rf` commands
+
+## If Recovery Fails
+
+You may need to:
+1. Reinstall applications
+2. Restore from backups if available
+3. Reconfigure your system settings
+
