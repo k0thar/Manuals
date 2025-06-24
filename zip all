@@ -1,0 +1,29 @@
+To create individual **`.zip` files for each directory** in the current folder, you can use this command:
+
+### **Command:**
+```bash
+for dir in */; do zip -r "${dir%/}.zip" "$dir"; done
+```
+
+### **Explanation:**
+1. **`for dir in */; do`**  
+   - Loops through all directories (`*/` matches only folders).
+
+2. **`"${dir%/}"`**  
+   - Removes the trailing `/` from the directory name (e.g., `L1/` → `L1`).
+
+3. **`zip -r "${dir%/}.zip" "$dir"`**  
+   - Creates a `.zip` file with the same name as the directory (`-r` for recursive compression).
+
+### **Alternative (Excluding `.gif` Files):**
+If you want to **skip non-directory files** (like `.gif` files), use:
+```bash
+for dir in */; do zip -r "${dir%/}.zip" "$dir"; done
+```
+This safely ignores files since `*/` only matches directories.
+
+### **Bonus: One-Liner Version**
+```bash
+for d in */; do zip -r "${d%/}.zip" "$d"; done
+```
+
